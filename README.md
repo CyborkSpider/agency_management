@@ -55,7 +55,7 @@ This module relies on the following standard Odoo apps:
 
 ### 📜 License
 
-This software is released under the **Ziad Elgohary** License.
+This software is released under the **MIT** License.
 *© 2026 Ziad Elgohary & Omar Bahnasy. All rights reserved.* 
 *(Note: Refer to `__manifest__.py` for specific proprietary terms and conditions.)*
 

@@ -54,5 +54,5 @@ financials, ratings, deadline monitoring, and admin dashboard.
     'installable': True,
     'application': True,
     'auto_install': False,
-    'license': 'LGPL-3',
+    'license': 'MIT',
 }
