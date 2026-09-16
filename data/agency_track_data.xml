@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="agency_track_web" model="agency.track">
+            <field name="name">Web Development</field>
+            <field name="code">WEB</field>
+            <field name="color">2</field>
+        </record>
+        <record id="agency_track_mobile" model="agency.track">
+            <field name="name">Mobile Development</field>
+            <field name="code">MOB</field>
+            <field name="color">3</field>
+        </record>
+        <record id="agency_track_data" model="agency.track">
+            <field name="name">Data Analysis</field>
+            <field name="code">DAT</field>
+            <field name="color">4</field>
+        </record>
+        <record id="agency_track_ai" model="agency.track">
+            <field name="name">AI / Machine Learning</field>
+            <field name="code">AI</field>
+            <field name="color">5</field>
+        </record>
+        <record id="agency_track_cyber" model="agency.track">
+            <field name="name">Cybersecurity</field>
+            <field name="code">CYB</field>
+            <field name="color">6</field>
+        </record>
+        <record id="agency_track_uiux" model="agency.track">
+            <field name="name">UI/UX Design</field>
+            <field name="code">UI</field>
+            <field name="color">7</field>
+        </record>
+    </data>
+</odoo>

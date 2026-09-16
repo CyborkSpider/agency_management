@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agency_dashboard_form" model="ir.ui.view">
+        <field name="name">agency.dashboard.form</field>
+        <field name="model">agency.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard">
+                <sheet>
+                    <div class="container-fluid text-center mt-4">
+                        <h1>Agency Command Center</h1>
+                        <p class="text-muted">High-level overview of teams, projects, and financials.</p>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-primary">Overview</h3>
+                                        <p>Check the projects list for details.</p>
+                                        <button name="%(agency_management.action_agency_project)d" type="action" class="btn btn-primary">Go to Projects</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-success">Teams</h3>
+                                        <p>Manage your resources and availability.</p>
+                                        <button name="%(agency_management.action_agency_team)d" type="action" class="btn btn-success">Go to Teams</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-warning">Tracks</h3>
+                                        <p>Specializations setup.</p>
+                                        <button name="%(agency_management.action_agency_track)d" type="action" class="btn btn-warning">Go to Tracks</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-info">Assignments</h3>
+                                        <p>View assignment history.</p>
+                                        <button name="%(agency_management.action_agency_assignment_history)d" type="action" class="btn btn-info">History</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_agency_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">agency.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

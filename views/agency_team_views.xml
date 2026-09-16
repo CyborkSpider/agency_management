@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View: Form -->
+    <record id="view_agency_team_form" model="ir.ui.view">
+        <field name="name">agency.team.form</field>
+        <field name="model">agency.team</field>
+        <field name="arch" type="xml">
+            <form string="Team">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="available,busy,overloaded"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_projects" type="object" class="oe_stat_button" icon="fa-briefcase">
+                            <field name="current_load" widget="statinfo" string="Projects"/>
+                        </button>
+                        <button name="action_view_members" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="member_count" widget="statinfo" string="Members"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Team Name"/>
+                        </h1>
+                        <h2>
+                            <field name="code"/>
+                        </h2>
+                    </div>
+                    
+                    <group>
+                        <group name="info">
+                            <field name="track_id"/>
+                            <field name="manager_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group name="capacity">
+                            <field name="capacity"/>
+                            <field name="availability" widget="progressbar"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group name="finance">
+                            <field name="internal_rate" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="billing_rate" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <group name="performance">
+                            <field name="rating_avg" widget="field_float_rating"/>
+                            <field name="on_time_rate" widget="percentage"/>
+                            <field name="performance_score" widget="progressbar"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Members" name="members">
+                            <field name="member_ids">
+                                <list editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="role"/>
+                                    <field name="join_date"/>
+                                    <field name="skill_ids" widget="many2many_tags"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Team Skills" name="skills">
+                            <field name="skill_ids" widget="many2many_tags" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View: Tree -->
+    <record id="view_agency_team_list" model="ir.ui.view">
+        <field name="name">agency.team.tree</field>
+        <field name="model">agency.team</field>
+        <field name="arch" type="xml">
+            <list string="Teams">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="track_id"/>
+                <field name="manager_id"/>
+                <field name="member_count"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'available'" 
+                       decoration-warning="state == 'busy'" 
+                       decoration-danger="state == 'overloaded'"/>
+                <field name="performance_score" widget="progressbar"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View: Kanban -->
+    <record id="view_agency_team_kanban" model="ir.ui.view">
+        <field name="name">agency.team.kanban</field>
+        <field name="model">agency.team</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="track_id" highlight_color="color">
+                <field name="name"/>
+                <field name="track_id"/>
+                <field name="manager_id"/>
+                <field name="member_count"/>
+                <field name="state"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <ul>
+                                    <li>Manager: <field name="manager_id"/></li>
+                                    <li>Members: <field name="member_count"/></li>
+                                </ul>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="state" widget="badge"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agency_team" model="ir.actions.act_window">
+        <field name="name">Teams</field>
+        <field name="res_model">agency.team</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Team
+            </p>
+        </field>
+    </record>
+</odoo>
+
+
+

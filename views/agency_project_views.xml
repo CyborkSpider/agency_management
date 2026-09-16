@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View: Form -->
+    <record id="view_agency_project_form" model="ir.ui.view">
+        <field name="name">agency.project.form</field>
+        <field name="model">agency.project</field>
+        <field name="arch" type="xml">
+            <form string="Agency Project">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_auto_assign" type="object" string="Auto Assign Team" class="oe_highlight" invisible="state != 'pending_assignment'"/>
+                    
+                    <button name="action_override_assign" type="object" string="Override Assignment" groups="agency_management.group_agency_admin" invisible="state not in ('pending_assignment', 'assigned')"/>
+                    
+                    <button name="action_start" type="object" string="Start Project" class="oe_highlight" invisible="state != 'assigned'"/>
+                    <button name="action_review" type="object" string="Request Review" class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_complete" type="object" string="Complete Project" class="oe_highlight" invisible="state != 'review'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('completed', 'cancelled')"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending_assignment,assigned,in_progress,review,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_odoo_project" type="object" class="oe_stat_button" icon="fa-puzzle-piece" invisible="not project_id">
+                            <span class="o_stat_text">Odoo Project</span>
+                        </button>
+                        <button name="action_view_timesheets" type="object" class="oe_stat_button" icon="fa-clock-o" invisible="not project_id">
+                            <field name="actual_hours" widget="statinfo" string="Recorded Hours"/>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Project Name" readonly="state in ('completed', 'cancelled')"/>
+                        </h1>
+                        <h2>
+                            <field name="code"/>
+                        </h2>
+                    </div>
+                    
+                    <group>
+                        <group name="details">
+                            <field name="client_id" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="track_id" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="required_skill_ids" widget="many2many_tags" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="required_team_size" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="priority" widget="priority" readonly="state in ('completed', 'cancelled')"/>
+                        </group>
+                        <group name="dates">
+                            <field name="date_start" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="date_deadline" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="estimated_hours" readonly="state in ('completed', 'cancelled')"/>
+                            <field name="deadline_status" widget="badge" 
+                                   decoration-success="deadline_status == 'normal'" 
+                                   decoration-warning="deadline_status in ('upcoming', 'due_soon')" 
+                                   decoration-danger="deadline_status in ('due_tomorrow', 'due_today', 'overdue')"/>
+                            <field name="risk_level" widget="badge"
+                                   decoration-success="risk_level == 'on_track'"
+                                   decoration-warning="risk_level == 'at_risk'"
+                                   decoration-danger="risk_level == 'critical'"/>
+                            <field name="progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Assignment Info" name="assignment">
+                            <group>
+                                <group>
+                                    <field name="assigned_team_id"/>
+                                    <field name="assignment_date"/>
+                                    <field name="assignment_score" widget="percentage"/>
+                                </group>
+                                <group>
+                                    <field name="project_id"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                </group>
+                            </group>
+                            <separator string="Reason for Selection"/>
+                            <field name="assignment_reason" readonly="1"/>
+                        </page>
+                        <page string="Financials" name="financials" groups="agency_management.group_agency_finance,agency_management.group_agency_admin">
+                            <group>
+                                <group>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="budget" widget="monetary"/>
+                                    <field name="revenue" widget="monetary"/>
+                                </group>
+                                <group>
+                                    <field name="cost" widget="monetary"/>
+                                    <field name="gross_profit" widget="monetary"/>
+                                    <field name="profit_margin" widget="percentage"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Ratings" name="ratings" invisible="not agency_rating_ids">
+                            <field name="agency_rating_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="client_rating"/>
+                                    <field name="overall_score"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- View: Tree -->
+    <record id="view_agency_project_list" model="ir.ui.view">
+        <field name="name">agency.project.tree</field>
+        <field name="model">agency.project</field>
+        <field name="arch" type="xml">
+            <list string="Projects" decoration-danger="risk_level == 'critical'" decoration-warning="risk_level == 'at_risk'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="track_id"/>
+                <field name="assigned_team_id"/>
+                <field name="date_deadline"/>
+                <field name="state" widget="badge"/>
+                <field name="risk_level" widget="badge"
+                       decoration-success="risk_level == 'on_track'"
+                       decoration-warning="risk_level == 'at_risk'"
+                       decoration-danger="risk_level == 'critical'"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View: Kanban -->
+    <record id="view_agency_project_kanban" model="ir.ui.view">
+        <field name="name">agency.project.kanban</field>
+        <field name="model">agency.project</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="track_id"/>
+                <field name="assigned_team_id"/>
+                <field name="risk_level"/>
+                <field name="progress"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <ul>
+                                    <li>Client: <field name="client_id"/></li>
+                                    <li>Team: <field name="assigned_team_id"/></li>
+                                    <li>Deadline: <field name="date_deadline"/></li>
+                                </ul>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="risk_level" widget="badge"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="progress" widget="progressbar"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agency_project" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">agency.project</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Project
+            </p>
+        </field>
+    </record>
+</odoo>
+
+
+

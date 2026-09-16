@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View: Form -->
+    <record id="view_agency_track_form" model="ir.ui.view">
+        <field name="name">agency.track.form</field>
+        <field name="model">agency.track</field>
+        <field name="arch" type="xml">
+            <form string="Track">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_teams" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="team_count" widget="statinfo" string="Teams"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Web Development"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="sequence"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View: Tree -->
+    <record id="view_agency_track_list" model="ir.ui.view">
+        <field name="name">agency.track.tree</field>
+        <field name="model">agency.track</field>
+        <field name="arch" type="xml">
+            <list string="Tracks">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="team_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agency_track" model="ir.actions.act_window">
+        <field name="name">Tracks</field>
+        <field name="res_model">agency.track</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Track
+            </p>
+            <p>
+                Tracks define the specialization of your agency teams.
+            </p>
+        </field>
+    </record>
+</odoo>

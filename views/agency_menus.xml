@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-Level Menu -->
+    <menuitem id="menu_agency_root" name="Agency ERP" sequence="50" web_icon="agency_management,static/description/icon.png"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_agency_dashboard" name="Dashboard" parent="menu_agency_root" action="action_agency_dashboard" sequence="10"/>
+
+    <!-- Operations Menu -->
+    <menuitem id="menu_agency_operations" name="Operations" parent="menu_agency_root" sequence="20"/>
+    
+    <menuitem id="menu_agency_project" name="Projects" parent="menu_agency_operations" action="action_agency_project" sequence="10"/>
+    
+    <menuitem id="menu_agency_team" name="Teams" parent="menu_agency_operations" action="action_agency_team" sequence="20"/>
+
+    <menuitem id="menu_agency_rating" name="Ratings" parent="menu_agency_operations" action="action_agency_project_rating" sequence="30"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_agency_configuration" name="Configuration" parent="menu_agency_root" sequence="100" groups="group_agency_admin"/>
+    
+    <menuitem id="menu_agency_track" name="Tracks" parent="menu_agency_configuration" action="action_agency_track" sequence="10"/>
+    
+    <menuitem id="menu_agency_assignment_history" name="Assignment History" parent="menu_agency_configuration" action="action_agency_assignment_history" sequence="20"/>
+
+</odoo>

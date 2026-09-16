@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View: Form -->
+    <record id="view_agency_project_rating_form" model="ir.ui.view">
+        <field name="name">agency.project.rating.form</field>
+        <field name="model">agency.project.rating</field>
+        <field name="arch" type="xml">
+            <form string="Project Rating">
+                <sheet>
+                    <group>
+                        <group string="Project Info">
+                            <field name="agency_project_id"/>
+                            <field name="team_id"/>
+                            <field name="date"/>
+                            <field name="rated_by"/>
+                        </group>
+                        <group string="Scores">
+                            <field name="client_rating"/>
+                            <field name="quality_score"/>
+                            <field name="on_time_score"/>
+                            <field name="communication_score"/>
+                            <field name="overall_score" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Comments">
+                        <field name="comments" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View: Tree -->
+    <record id="view_agency_project_rating_tree" model="ir.ui.view">
+        <field name="name">agency.project.rating.tree</field>
+        <field name="model">agency.project.rating</field>
+        <field name="arch" type="xml">
+            <list string="Ratings">
+                <field name="date"/>
+                <field name="agency_project_id"/>
+                <field name="team_id"/>
+                <field name="client_rating"/>
+                <field name="quality_score"/>
+                <field name="on_time_score"/>
+                <field name="communication_score"/>
+                <field name="overall_score"/>
+                <field name="rated_by"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agency_project_rating" model="ir.actions.act_window">
+        <field name="name">Project Ratings</field>
+        <field name="res_model">agency.project.rating</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No ratings yet. Complete a project and add client feedback.
+            </p>
+        </field>
+    </record>
+</odoo>
