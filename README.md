@@ -1,6 +1,6 @@
 # Agency Management (Odoo 19)
 
-[🇪🇸 English](#english) | [🇸🇦 العربية](#arabic)
+[🇺🇲 English](#english) | [🇸🇦 العربية](#arabic)
 
 ---
 
